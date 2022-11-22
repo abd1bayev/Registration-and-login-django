@@ -46,8 +46,6 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
-    "drf_spectacular",
-    "drf_spectacular_sidecar",
     "django_filters",
     "phonenumber_field",
 ]

@@ -25,7 +25,7 @@ class User(AbstractUser, PermissionsMixin):
     #     verbose_name=_("phone"),
     # )
 
-    phone = PhoneNumberField(blank=True, null=True)
+    phone = PhoneNumberField(u'Fax', null=True, blank=True)
 
 
     # NB: email validation will be done in the serializer

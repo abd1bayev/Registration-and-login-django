@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
 
-    'apps.user_profile',
+    'user_profile',
 
 ]
 

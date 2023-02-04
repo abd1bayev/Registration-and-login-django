@@ -35,11 +35,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("user/", include("apps.user_profile.urls")),
+    path("user/", include("user_profile.urls")),
 
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
 if settings.DEBUG:

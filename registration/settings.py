@@ -28,28 +28,30 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+SIMPLE_JWT = {
+    'AUTH_TOKEN_CLASSES': ('path_to_tokens_py.tokens.JWTAccessToken',),
+}
+
 # Application definition
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
 
-LOCAL_APPS = [
-    "users.apps.UsersConfig",
-]
+    "users",
 
-THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
     "django_filters",
     "phonenumber_field",
 ]
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+# INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 AUTH_USER_MODEL = "users.User"
 

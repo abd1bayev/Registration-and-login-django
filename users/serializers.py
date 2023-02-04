@@ -12,6 +12,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 # from products.serializers import HomeSerializer, NewAllWebHomeCreateSerializer
 # from store.serializers import StoreModelSerializer, ProfileStoreModelSerializer
 from .models import User, Map
+# from ..cart.serializers import CartProductSerializer
 # from ..products.serializers import ProductSerializer
 
 
@@ -111,7 +112,7 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # products = ProductSerializer(many=True)
+    # products = CartProductSerializer(many=True)
 
     class Meta:
         model = User

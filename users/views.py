@@ -1,7 +1,8 @@
 from django.contrib.auth import logout
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import mixins, generics, permissions, status
+from rest_framework import mixins, generics, permissions, status, viewsets
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -64,7 +65,15 @@ class UserViewSet(GenericViewSet):
 #         if not user:
 #             login(request, user)
 
-
+# class LoginView(viewsets.ViewSet):
+#     """ Elektron pochta va parolni tekshiradi va autentifikatsiya belgisini qaytaradi."""
+#
+#     serializer_class = AuthTokenSerializer
+#
+#     def create(self, request):
+#         """Tokenni tasdiqlash va yaratish uchun ObtainAuthToken APIView-dan foydalaning."""
+#
+#         return ObtainAuthToken().as_view()(request=request._request)
 class LoginView(GenericViewSet):
     serializer_class = LoginSerializer
     queryset = User.objects.all()
@@ -76,6 +85,10 @@ class LoginView(GenericViewSet):
         serializer.is_valid(raise_exception=True)
         phone_number = serializer.validated_data['phone_number']
         code = serializer.validated_data['code']
+        try:
+            user = User.objects.get(phone_number=phone_number)
+        except User.DoesNotExist:
+            return Response({'error': 'User with this phone number does not exist'})
         if int(code) == int(User.objects.get(phone_number=phone_number).mycode):
 
             token, created = User.objects.get_or_create(phone_number=phone_number)
@@ -136,8 +149,8 @@ class UserProfileList(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
-        users = User.objects.get(id=pk)
-        serializer = UserSerializer(users, context={'request': request})
+        users = User.objects.filter(id=pk)
+        serializer = UserSerializer(users, context={'request': request}, many=True)
         return Response(serializer.data)
 
 
